@@ -1,0 +1,338 @@
+TP – Tableaux associatifs
+1. Pour se positionner, faire cd [Nom du Dossier].
+2. Pour cloner le dépôt, ouvrir un terminal et exécutez la commande suivante: git clone https://github.com/dev-HR/B1-Asla-Tab-Assoc.git .
+3. Pour se positionner , faire la commande cd B1-Asla-Tab-Assoc 
+4. Pour éditer le fichier, faire geany asla-tab-assoc
+-------------------Exercice 1 : Liste des produits  -------------------
+5. La fonction visualiserProduits() permet de visualiser tous les produits et la fonction getProduitEnChaine() pemet de traiter le tableau en liste.
+6. Voici le code:
+// Exercice 1
+echo "\n1) Liste des produits :\n\n" ;
+visualiserProduits($produits) ;
+7. Voici la trace d'exécution:
+1) Liste des produits :
+
+
+[178] Dentifrice à la fraise
+	Prix  : 15 €
+	Promo : 10 %
+
+[179] Dentifrice au sel marin
+	Prix  : 8.9 €
+	Promo : 0 %
+
+[181] Dentifrice au citron vert
+	Prix  : 10.9 €
+	Promo : 5 %
+
+[182] Dentifrice à l'orange
+	Prix  : 12 €
+	Promo : 0 %
+
+[201] Crème hydratante à l'huile d'avocat
+	Prix  : 20.5 €
+	Promo : 0 %
+
+[202] Crème hydratante à l'huile d'argan
+	Prix  : 19.3 €
+	Promo : 20 %
+
+[203] Crème hydratante à l'huile de coco
+	Prix  : 17.3 €
+	Promo : 10 %
+
+[204] Crème de nuit relaxante
+	Prix  : 21.7 €
+	Promo : 50 %
+
+[210] Crème de jour parfumée au jasmin
+	Prix  : 37.5 €
+	Promo : 30 %
+-------------------Exercice 2 : Liste des produits en promo   -------------------
+8.Voici le code de la fonction:
+function visualiserProduitsEnPromo(){
+		global $produits ;
+		
+		foreach( $produits as $unProduit ){
+			if( estEnPromo( $unProduit ) == TRUE ){
+				$prixPromo = calculerPrixPromo( $unProduit );
+				echo getProduitEnChaine( $unProduit );
+				echo "\tPrix promo : $prixPromo €\n";
+	
+			}
+		}
+		
+	}
+9.Retirer le #.
+10.Voici la trace d'exécution:
+2) Liste des produits en promo :
+
+
+[178] Dentifrice à la fraise
+	Prix  : 15 €
+	Promo : 10 %
+	Prix promo : 13.5 €
+
+[181] Dentifrice au citron vert
+	Prix  : 10.9 €
+	Promo : 5 %
+	Prix promo : 10.355 €
+
+[202] Crème hydratante à l'huile d'argan
+	Prix  : 19.3 €
+	Promo : 20 %
+	Prix promo : 15.44 €
+
+[203] Crème hydratante à l'huile de coco
+	Prix  : 17.3 €
+	Promo : 10 %
+	Prix promo : 15.57 €
+
+[204] Crème de nuit relaxante
+	Prix  : 21.7 €
+	Promo : 50 %
+	Prix promo : 10.85 €
+
+[210] Crème de jour parfumée au jasmin
+	Prix  : 37.5 €
+	Promo : 30 %
+	Prix promo : 26.25 €
+-------------------Exercice 3 : Promotion la plus importante -------------------
+11.Voici le code de la fonction getPromoMax():
+	// Exercice 3
+	function getPromoMax(){
+		global $produits ;
+		
+		$promoMax = 0 ;
+		
+		foreach( $produits as $unProduit ){
+			if( estEnPromo( $unProduit ) == TRUE ){
+				$promo = $unProduit['promotion'];
+				if ($promo > $promoMax) {
+					$promoMax = $promo;
+				}
+			}
+		}
+		
+		return $promoMax ;
+	}
+12.Retirer le #.
+13.Voici la trace d'exécution:
+3) Promotion max :
+
+50 %
+-------------------Exercice 4 : Promotion la plus faible  -------------------
+14.Voici le code de la fonction getPromoMin():
+	function getPromoMin(){
+		global $produits ;
+		
+		$promoMin = 0 ;
+		
+		foreach( $produits as $unProduit ){
+			if( estEnPromo( $unProduit ) == TRUE ){
+				$promo = $unProduit['promotion'];
+				if ($promo < $promoMin) {
+					$promoMax = $promo;
+				}
+			}
+		}
+		
+		return $promoMin ;
+	}
+15.Retirer le #.
+16.Voici la trace d'exécution:
+4) Promotion min :
+0 %
+-------------------Exercice 5 : Moyenne des promotions  -------------------
+17.Voici le code de la fonction:
+	function calculerMoyennePromos(){
+		global $produits ;
+		
+		$totalPromos = 0 ;
+		$nbPromos = 0 ;
+		
+		foreach( $produits as $unProduit ){
+			
+			if( estEnPromo( $unProduit ) == TRUE ){
+				$promo = $unProduit[ 'promotion' ] ;
+				 $totalPromos += $promo;
+				 $nbPromos++;
+			}
+		}
+		
+		return $totalPromos / $nbPromos ;
+	}
+18.Retirer le #.
+19.Voici la trace d'exécution:
+5) Moyenne des promotions :
+20.833333333333 %
+
+-------------------Exercice 6 : Recherche d'un produit par son code  -------------------
+20.La fonction getproduit permet de récupérer le code du produit et de l'afficher si il existe.
+21.Voici le code pour les deux produits:
+	// Exercice 6
+	echo "\n6) Recherche d'un produit par son code :\n\n" ;
+
+	echo "Produit 179 :\n\t" ;
+	$leProduit = getProduit( 179 ) ;
+	if ($leProduit) {
+		echo getProduitEnChaine($leProduit);
+	} else {
+		echo "Produit inconnu";
+	}
+
+	echo "Produit 318 :\n\t" ;
+	$leProduit = getProduit( 318 ) ;
+	if ($leProduit) {
+		echo getProduitEnChaine($leProduit);
+	} else {
+		echo "Produit inconnu";
+	}
+22.Voici la trace d'exécution:
+6) Recherche d'un produit par son code :
+
+Produit 179 :
+
+[179] Dentifrice au sel marin
+        Prix  : 8.9 €
+        Promo : 0 %
+Produit 318 :
+        Produit inconnu
+-------------------Exercice 7 : Annuler toutes les promotions  -------------------
+23.La fonction annulerToutesLesPromos permet d'annuler toutes les promotions de tous les produits.
+24.Voici le code de test:
+		// Exercice 7
+		echo "\n7) Annuler toutes les promotions :\n\n" ;
+		annulerToutesLesPromos();
+		visualiserProduits();
+25. Voici la trace d'exécution:
+7) Annuler toutes les promotions :
+
+
+[178] Dentifrice à la fraise
+        Prix  : 15 €
+        Promo : 0 %
+
+[179] Dentifrice au sel marin
+        Prix  : 8.9 €
+        Promo : 0 %
+
+[181] Dentifrice au citron vert
+        Prix  : 10.9 €
+        Promo : 0 %
+
+[182] Dentifrice à l'orange
+        Prix  : 12 €
+        Promo : 0 %
+
+[201] Crème hydratante à l'huile d'avocat
+        Prix  : 20.5 €
+        Promo : 0 %
+
+[202] Crème hydratante à l'huile d'argan
+        Prix  : 19.3 €
+        Promo : 0 %
+
+[203] Crème hydratante à l'huile de coco
+        Prix  : 17.3 €
+        Promo : 0 %
+
+[204] Crème de nuit relaxante
+        Prix  : 21.7 €
+        Promo : 0 %
+
+[210] Crème de jour parfumée au jasmin
+        Prix  : 37.5 €
+        Promo : 0 %
+
+-------------------Exercice 8 : Appliquer une promotion de 10 % à tous les produits  -------------------
+26.Voici la fonction  appliquerMemePromoTousProduits($promo):
+	function appliquerMemePromoTousProduits($promo) {
+		global $produits;
+
+		foreach ($produits as &$produit) {
+			$produit['promotion'] = $promo;
+		}
+	}
+27.Retirer le #.
+28.Voici la trace d'exécution:
+8) Appliquer une promotion de 10 % à tous les produits :
+
+
+[178] Dentifrice à la fraise
+        Prix  : 15 €
+        Promo : 10 %
+
+[179] Dentifrice au sel marin
+        Prix  : 8.9 €
+        Promo : 10 %
+
+[181] Dentifrice au citron vert
+        Prix  : 10.9 €
+        Promo : 10 %
+
+[182] Dentifrice à l'orange
+        Prix  : 12 €
+        Promo : 10 %
+
+[201] Crème hydratante à l'huile d'avocat
+        Prix  : 20.5 €
+        Promo : 10 %
+
+[202] Crème hydratante à l'huile d'argan
+        Prix  : 19.3 €
+        Promo : 10 %
+
+[203] Crème hydratante à l'huile de coco
+        Prix  : 17.3 €
+        Promo : 10 %
+
+[204] Crème de nuit relaxante
+        Prix  : 21.7 €
+        Promo : 10 %
+
+[210] Crème de jour parfumée au jasmin
+        Prix  : 37.5 €
+        Promo : 10 %
+-------------------Exercice 9 : Appliquer une promotion de 30 % au produit 210 -------------------
+29.Voici le code d'appliquerPromoProduit():
+30.Retirer le #.
+31.Voici la trace d'exécution:
+9) Appliquer une promotion de 30 % au produit 210 :
+
+
+[178] Dentifrice à la fraise
+        Prix  : 15 €
+        Promo : 10 %
+
+[179] Dentifrice au sel marin
+        Prix  : 8.9 €
+        Promo : 10 %
+
+[181] Dentifrice au citron vert
+        Prix  : 10.9 €
+        Promo : 10 %
+
+[182] Dentifrice à l'orange
+        Prix  : 12 €
+        Promo : 10 %
+
+[201] Crème hydratante à l'huile d'avocat
+        Prix  : 20.5 €
+        Promo : 10 %
+
+[202] Crème hydratante à l'huile d'argan
+        Prix  : 19.3 €
+        Promo : 10 %
+
+[203] Crème hydratante à l'huile de coco
+        Prix  : 17.3 €
+        Promo : 10 %
+
+[204] Crème de nuit relaxante
+        Prix  : 21.7 €
+        Promo : 10 %
+
+[210] Crème de jour parfumée au jasmin
+        Prix  : 37.5 €
+        Promo : 30 %
